@@ -30,11 +30,11 @@ const Nav = () => {
   }, []);
 
   return (
-    <header className="p-4 inset-x-0">
+    <header className="p-4 inset-x-0 ">
       <nav className="flex items-center mx-auto max-w-7xl justify-between ">
         <h2>BeBlog</h2>
         {/* Desktop Devices */}
-        <div className="hidden sm:flex items-center gap-3">
+        <div className="hidden sm:flex items-center gap-5 text-xl">
           {!isUserLoggedIn ? (
             <>
               <a href="/">Posts</a>
