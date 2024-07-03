@@ -54,7 +54,11 @@ const Nav = () => {
         <div className="flex sm:hidden">
           <DropdownMenu open={isDropDownOpen} onOpenChange={setIsDropDownOpen}>
             <DropdownMenuTrigger>
-              <Menu />
+              <Menu
+                className={`${
+                  isDropDownOpen ? "rotate-90" : ""
+                } transition-all`}
+              />
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               {!isUserLoggedIn ? (
