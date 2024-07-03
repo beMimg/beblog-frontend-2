@@ -30,8 +30,8 @@ const Nav = () => {
   }, []);
 
   return (
-    <header className="py-4 inset-x-0 bg-slate-400">
-      <nav className="flex items-center mx-auto max-w-7xl justify-between px-4">
+    <header className="p-4 inset-x-0">
+      <nav className="flex items-center mx-auto max-w-7xl justify-between ">
         <h2>BeBlog</h2>
         {/* Desktop Devices */}
         <div className="hidden sm:flex items-center gap-3">
@@ -39,8 +39,8 @@ const Nav = () => {
             <>
               <a href="/">Posts</a>
               <a href="/">About</a>
-              <a href="/">Sign up</a>
-              <a href="/">Sign in</a>
+              <Link to="/sign-up">Sign up</Link>
+              <Link to="/sign-in">Sign in</Link>
             </>
           ) : (
             <>
@@ -65,8 +65,17 @@ const Nav = () => {
                 <>
                   <DropdownMenuLabel>Posts</DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem>Sign Up</DropdownMenuItem>
-                  <DropdownMenuItem>Sign In</DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setIsDropDownOpen(false)}>
+                    <Link to="/sign-up">Sign up</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Link
+                      to="/sign-in"
+                      onClick={() => setIsDropDownOpen(false)}
+                    >
+                      Sign in
+                    </Link>
+                  </DropdownMenuItem>
                   <DropdownMenuItem>About</DropdownMenuItem>
                 </>
               ) : (
