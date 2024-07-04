@@ -36,7 +36,7 @@ const Nav = () => {
           <h1>BeBlog</h1>
         </Link>
         {/* Desktop Devices */}
-        <div className="hidden sm:flex items-center gap-5 text-xl font-medium">
+        <div className="hidden sm:flex items-center gap-5 text-lg font-medium">
           {!isUserLoggedIn ? (
             <>
               <Link to="/posts">Posts</Link>
