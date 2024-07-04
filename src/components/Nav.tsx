@@ -32,7 +32,9 @@ const Nav = () => {
   return (
     <header className="p-4 inset-x-0 ">
       <nav className="flex items-center mx-auto max-w-7xl justify-between ">
-        <h2>BeBlog</h2>
+        <Link to="/">
+          <h1>BeBlog</h1>
+        </Link>
         {/* Desktop Devices */}
         <div className="hidden sm:flex items-center gap-5 text-xl">
           {!isUserLoggedIn ? (
