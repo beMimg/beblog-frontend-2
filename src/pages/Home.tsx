@@ -1,15 +1,18 @@
-import { Link } from "react-router-dom";
-import FlipLink from "../../components/ui/fliplink";
-import { InfiniteMovingCards } from "../../components/ui/infinite-moving-cards";
-import { LinkPreview } from "../../components/ui/link-preview";
-import personalWebsitePng from "../../assets/personal-website.png";
+import FlipLink from "../components/ui/fliplink";
+import { InfiniteMovingCards } from "../components/ui/infinite-moving-cards";
+import { LinkPreview } from "../components/ui/link-preview";
+import personalWebsitePng from "../assets/personal-website.png";
 
 const Home = () => {
   return (
     <div className="flex flex-1 flex-col justify-center gap-8 items-center">
       <h1 className="text-center">
         Welcome to{" "}
-        <LinkPreview url="https://www.bemimg.com" imageSrc={personalWebsitePng}>
+        <LinkPreview
+          className="underline"
+          url="https://www.bemimg.com"
+          imageSrc={personalWebsitePng}
+        >
           beMimg's
         </LinkPreview>{" "}
         Code Circus

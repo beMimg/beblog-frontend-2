@@ -1,4 +1,3 @@
-"use client";
 import * as HoverCardPrimitive from "@radix-ui/react-hover-card";
 import React from "react";
 import {
@@ -7,7 +6,6 @@ import {
   useMotionValue,
   useSpring,
 } from "framer-motion";
-import Link from "react-router-dom";
 import { cn } from "../../lib/utils";
 
 type LinkPreviewProps = {

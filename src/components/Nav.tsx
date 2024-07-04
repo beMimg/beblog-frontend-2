@@ -1,4 +1,4 @@
-import { Menu, MenuIcon } from "lucide-react";
+import { Menu } from "lucide-react";
 import { Link } from "react-router-dom";
 import {
   DropdownMenu,
@@ -36,18 +36,17 @@ const Nav = () => {
           <h1>BeBlog</h1>
         </Link>
         {/* Desktop Devices */}
-        <div className="hidden sm:flex items-center gap-5 text-xl">
+        <div className="hidden sm:flex items-center gap-5 text-xl font-medium">
           {!isUserLoggedIn ? (
             <>
-              <a href="/">Posts</a>
-              <a href="/">About</a>
+              <Link to="/posts">Posts</Link>
               <Link to="/sign-up">Sign up</Link>
               <Link to="/sign-in">Sign in</Link>
             </>
           ) : (
             <>
-              <a href="/">Posts</a>
-              <a href="/">Profile</a>
+              <Link to="/posts">Posts</Link>
+              <Link to="/profile">Profile</Link>
             </>
           )}
 
@@ -65,8 +64,9 @@ const Nav = () => {
             <DropdownMenuContent>
               {!isUserLoggedIn ? (
                 <>
-                  <DropdownMenuLabel>Posts</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>
+                    <Link to="/posts">Posts</Link>
+                  </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => setIsDropDownOpen(false)}>
                     <Link to="/sign-up">Sign up</Link>
                   </DropdownMenuItem>
@@ -78,13 +78,14 @@ const Nav = () => {
                       Sign in
                     </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem>About</DropdownMenuItem>
                 </>
               ) : (
                 <>
                   <DropdownMenuLabel>Profile</DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem>Posts</DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Link to="/posts">Posts</Link>
+                  </DropdownMenuItem>
                 </>
               )}
             </DropdownMenuContent>
