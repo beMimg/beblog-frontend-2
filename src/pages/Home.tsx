@@ -21,7 +21,7 @@ const Home = () => {
         Where my logic is as lost as an alien in a shopping mall, and my blogs?
         They’re out of this world!
       </p>
-      <FlipLink href="/posts">POSTS ↗</FlipLink>
+      <FlipLink href="/posts">SEE POSTS ↗</FlipLink>
       <div className=" overflow-hidden w-full flex items-center justify-center">
         <InfiniteMovingCards
           items={testimonials}

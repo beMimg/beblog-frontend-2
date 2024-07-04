@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 const DURATION = 0.25;
 const STAGGER = 0.025;
 
+// children.split(/(?!$)/u) splits the string by each character, including spaces, and preserves them during rendering. The conditional l === " " ? "\u00A0" : l ensures that spaces are rendered as non-breaking spaces, preventing them from collapsing in the layout. This way, "SEE POSTS" will appear correctly with the space preserved
 const FlipLink = ({ children, href }: { children: any; href: string }) => {
   return (
     <motion.a
@@ -12,7 +13,7 @@ const FlipLink = ({ children, href }: { children: any; href: string }) => {
       href={href}
     >
       <div>
-        {children.split("").map((l: any, i: any) => {
+        {children.split(/(?!$)/u).map((l: any, i: any) => {
           return (
             <motion.span
               // Why i+1 conditional rendering style? If the Icon is font-medium > it will have by default a blue background.
@@ -31,13 +32,13 @@ const FlipLink = ({ children, href }: { children: any; href: string }) => {
               }}
               key={i}
             >
-              {l}
+              {l === " " ? "\u00A0" : l}
             </motion.span>
           );
         })}
       </div>
       <div className="absolute inset-0">
-        {children.split("").map((l: any, i: any) => {
+        {children.split(/(?!$)/u).map((l: any, i: any) => {
           return (
             <motion.span
               className={`inline-block ${
@@ -54,7 +55,7 @@ const FlipLink = ({ children, href }: { children: any; href: string }) => {
               }}
               key={i}
             >
-              {l}
+              {l === " " ? "\u00A0" : l}
             </motion.span>
           );
         })}
