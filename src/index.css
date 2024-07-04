@@ -86,3 +86,15 @@ blockquote {
 code {
   @apply relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold;
 }
+
+ul {
+  @apply my-6 ml-6 list-disc [&>li]:mt-2;
+}
+
+.p-lead {
+  @apply text-2xl text-muted-foreground;
+}
+
+.p-large {
+  @apply text-lg font-semibold;
+}
