@@ -1,15 +1,22 @@
 import { Link } from "react-router-dom";
 import FlipLink from "../../components/ui/fliplink";
 import { InfiniteMovingCards } from "../../components/ui/infinite-moving-cards";
+import { LinkPreview } from "../../components/ui/link-preview";
+import personalWebsitePng from "../../assets/personal-website.png";
 
 const Home = () => {
   return (
     <div className="flex flex-1 flex-col justify-center gap-8 items-center">
       <h1 className="text-center">
-        When keyboards can be used not only for coding
+        Welcome to{" "}
+        <LinkPreview url="https://www.bemimg.com" imageSrc={personalWebsitePng}>
+          beMimg's
+        </LinkPreview>{" "}
+        Code Circus
       </h1>
       <p className=" p-lead text-center ">
-        I like writting shi### code, even more shi#### blogs
+        Where my logic is as lost as an alien in a shopping mall, and my blogs?
+        They’re out of this world!
       </p>
       <FlipLink href="/posts">POSTS ↗</FlipLink>
       <div className=" overflow-hidden w-full flex items-center justify-center">
