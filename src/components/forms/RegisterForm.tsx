@@ -48,7 +48,7 @@ const RegisterForm = () => {
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle>Sign In</CardTitle>
+        <CardTitle>Sign Up</CardTitle>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -63,10 +63,7 @@ const RegisterForm = () => {
                 <FormItem>
                   <FormLabel>Username</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="What do you want to be called?"
-                      {...field}
-                    />
+                    <Input placeholder="duckcowboy_slaying" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -79,10 +76,7 @@ const RegisterForm = () => {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="What do you want to be called?"
-                      {...field}
-                    />
+                    <Input placeholder="duckcowboy@private.pri" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
