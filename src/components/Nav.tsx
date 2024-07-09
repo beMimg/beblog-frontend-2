@@ -9,11 +9,12 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { useEffect, useState } from "react";
+import { useAuth } from "../context/AuthContext";
 
 const Nav = () => {
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
 
-  const isUserLoggedIn = false;
+  const { accessToken } = useAuth();
 
   useEffect(() => {
     const handleResize = () => {
@@ -37,7 +38,7 @@ const Nav = () => {
         </Link>
         {/* Desktop Devices */}
         <div className="hidden sm:flex items-center gap-5 text-lg font-medium">
-          {!isUserLoggedIn ? (
+          {!accessToken ? (
             <>
               <Link to="/posts">Posts</Link>
               <Link to="/sign-up">Sign up</Link>
@@ -62,7 +63,7 @@ const Nav = () => {
               />
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              {!isUserLoggedIn ? (
+              {!accessToken ? (
                 <>
                   <DropdownMenuItem>
                     <Link to="/posts">Posts</Link>

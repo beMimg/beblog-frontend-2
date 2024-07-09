@@ -5,24 +5,28 @@ import SignIn from "./pages/unauthenticated/SignIn";
 import SignUp from "./pages/unauthenticated/SignUp";
 import { ThemeProvider } from "./theme/ThemeProvider";
 import Posts from "./pages/Posts";
+import { useAuth } from "./context/AuthContext";
+import Profile from "./pages/authenticated/Profile";
 
 function App() {
-  const accessToken = false;
+  const { accessToken } = useAuth();
 
   return (
     <BrowserRouter>
       <ThemeProvider>
         <Routes>
           <Route element={<Layout />}>
+            {/* common routes */}
+            <Route path="/" element={<Home />} />
+            <Route path="/posts" element={<Posts />} />
+
             {!accessToken ? (
               <>
-                <Route path="/" element={<Home />} />
                 <Route path="/sign-in" element={<SignIn />} />
                 <Route path="/sign-up" element={<SignUp />} />
-                <Route path="/posts" element={<Posts />} />
               </>
             ) : (
-              <Route path="/" element={<p>logged in</p>} />
+              <Route path="/profile" element={<Profile />} />
             )}
           </Route>
         </Routes>
