@@ -1,6 +1,5 @@
-import React, {
+import {
   ReactNode,
-  SetStateAction,
   createContext,
   useContext,
   useEffect,
