@@ -18,31 +18,63 @@ import {
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "../ui/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "../../api/axios";
+import { useMutation } from "@tanstack/react-query";
+import { useAuth } from "../../context/AuthContext";
 
-const formSchema = z.object({
-  username: z
-    .string()
-    .min(2, { message: "Username must be at least 2 characters" })
-    .max(50),
-  password: z
-    .string()
-    .min(1, { message: "Password must be at least 1 character" }),
-  email: z.string().email(),
-});
+const formSchema = z
+  .object({
+    username: z
+      .string()
+      .min(2, { message: "Username must be at least 2 characters" })
+      .max(50),
+    password: z
+      .string()
+      .min(6, { message: "Password must be at least 6 characters" }),
+    email: z.string().email(),
+    password_confirmation: z.string(),
+  })
+  .refine((data) => data.password === data.password_confirmation, {
+    message: "Passwords must match",
+    path: ["password_confirmation"],
+  });
+
+type FormData = z.infer<typeof formSchema>;
 
 const RegisterForm = () => {
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       username: "",
       password: "",
       email: "",
+      password_confirmation: "",
+    },
+  });
+
+  const { setAccessToken } = useAuth();
+
+  const navigation = useNavigate();
+
+  const mutation = useMutation({
+    mutationFn: (formData: z.infer<typeof formSchema>) => {
+      console.log(formData);
+
+      return axios.post("/auth/signup", formData);
+    },
+
+    onSuccess: (data) => {
+      setAccessToken(data.data.token);
+      setTimeout(() => {
+        navigation("/", { replace: true });
+        window.location.reload();
+      }, 2000);
     },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    mutation.mutate(values);
   }
 
   return (
@@ -91,36 +123,45 @@ const RegisterForm = () => {
                   <FormControl>
                     <Input placeholder="******" type="password" {...field} />
                   </FormControl>
-
                   <FormMessage />
                 </FormItem>
               )}
             />
             <FormField
               control={form.control}
-              name="password"
+              name="password_confirmation"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Password Confirmation</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="******"
-                      type="password_confirmation"
-                      {...field}
-                    />
+                    <Input placeholder="******" type="password" {...field} />
                   </FormControl>
-
                   <FormMessage />
                 </FormItem>
               )}
             />
+            {mutation.isError && (
+              <span>
+                <p className=" text-destructive">
+                  Something went wrong, please try again later.
+                </p>
+              </span>
+            )}
+            {mutation.isSuccess && (
+              <span>
+                <p className=" text-emerald-500/90">
+                  Your account has been successfully created. Redirecting you
+                  now...
+                </p>
+              </span>
+            )}
             <Button type="submit">Submit</Button>
           </form>
         </Form>
       </CardContent>
       <CardFooter>
-        Already registred ?
-        <Button variant={"link"} className="px-2 py-0 ">
+        Already registered?
+        <Button variant="link" className="px-2 py-0">
           <Link to="/sign-in">Sign in</Link>
         </Button>
       </CardFooter>
