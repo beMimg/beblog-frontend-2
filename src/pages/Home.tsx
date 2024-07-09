@@ -7,6 +7,7 @@ import { useAuth } from "../context/AuthContext";
 const Home = () => {
   const { accessToken } = useAuth();
 
+  console.log(accessToken);
   return (
     <div className="flex flex-1 flex-col justify-center gap-8 items-center">
       <h1 className="text-center">

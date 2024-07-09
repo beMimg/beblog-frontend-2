@@ -58,9 +58,7 @@ const RegisterForm = () => {
   const navigation = useNavigate();
 
   const mutation = useMutation({
-    mutationFn: (formData: z.infer<typeof formSchema>) => {
-      console.log(formData);
-
+    mutationFn: (formData: FormData) => {
       return axios.post("/auth/signup", formData);
     },
 
@@ -73,7 +71,7 @@ const RegisterForm = () => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: FormData) {
     mutation.mutate(values);
   }
 

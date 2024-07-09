@@ -18,7 +18,10 @@ import {
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "../ui/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
+import axios from "../../api/axios";
+import { useAuth } from "../../context/AuthContext";
 
 const formSchema = z.object({
   username: z
@@ -30,8 +33,10 @@ const formSchema = z.object({
     .min(1, { message: "Password must be at least 1 character" }),
 });
 
+type FormData = z.infer<typeof formSchema>;
+
 const LoginForm = () => {
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       username: "",
@@ -39,8 +44,29 @@ const LoginForm = () => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  const { setAccessToken } = useAuth();
+
+  const navigation = useNavigate();
+
+  const mutation = useMutation({
+    mutationFn: (formData: FormData) => {
+      return axios.post("/auth/signin", formData);
+    },
+
+    onError: (error: any) => {
+      console.error(error.message);
+    },
+    onSuccess: (data) => {
+      setAccessToken(data.data.token);
+      setTimeout(() => {
+        navigation("/", { replace: true });
+        window.location.reload();
+      }, 2000);
+    },
+  });
+
+  function onSubmit(values: FormData) {
+    mutation.mutate(values);
   }
 
   return (
@@ -61,10 +87,7 @@ const LoginForm = () => {
                 <FormItem>
                   <FormLabel>Username</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="What do you want to be called?"
-                      {...field}
-                    />
+                    <Input {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -84,6 +107,22 @@ const LoginForm = () => {
                 </FormItem>
               )}
             />
+            {mutation.isError && (
+              <span>
+                <p className=" text-destructive">
+                  {mutation.error.response?.data.message
+                    ? mutation.error.response?.data.message
+                    : mutation.error.message}
+                </p>
+              </span>
+            )}
+            {mutation.isSuccess && (
+              <span>
+                <p className=" text-emerald-500/90">
+                  Your have been successfully sign in. Redirecting you now...
+                </p>
+              </span>
+            )}
             <Button type="submit">Submit</Button>
           </form>
         </Form>
