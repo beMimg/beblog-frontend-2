@@ -1,5 +1,7 @@
 import { cn } from "../../lib/utils";
 import React, { useEffect, useState } from "react";
+import moment from "moment";
+import { Link } from "react-router-dom";
 
 export const InfiniteMovingCards = ({
   items,
@@ -9,9 +11,11 @@ export const InfiniteMovingCards = ({
   className,
 }: {
   items: {
-    quote: string;
-    name: string;
+    _id: string;
+    description: string;
+    topic: string;
     title: string;
+    createdAt: string;
   }[];
   direction?: "left" | "right";
   speed?: "fast" | "normal" | "slow";
@@ -69,6 +73,7 @@ export const InfiniteMovingCards = ({
       }
     }
   };
+
   return (
     <div
       ref={containerRef}
@@ -86,22 +91,30 @@ export const InfiniteMovingCards = ({
         )}
       >
         {items.map((item) => (
-          <li
-            className="w-[350px] max-w-full relative rounded-2xl border flex-shrink-0 px-8 py-6 md:w-[450px]"
+          <Link
+            to={`/post/${item._id}`}
+            className="w-[350px] max-w-full relative rounded-2xl border flex-shrink-0 px-8 py-6 md:w-[450px] transition-transform  hover:-translate-y-2"
             style={{
               background:
                 "linear-gradient(180deg, var(--slate-800), var(--slate-900)",
             }}
-            key={item.name}
+            key={item._id}
           >
-            <blockquote>{item.quote}</blockquote>
+            <p className=" text-muted-foreground">{item.title}</p>
+            <blockquote>{item.description}</blockquote>
             <div className="relative z-20 mt-6 flex flex-row items-center">
-              <span className="flex flex-col gap-1">
-                <p className=" text-muted-foreground">{item.name}</p>
-                <p className=" text-muted-foreground">{item.title}</p>
+              <span className="flex flex-col gap-1 w-full">
+                <p className=" text-muted-foreground">{item.topic}</p>
+                <span className="flex flex-row justify-between items-center w-full ">
+                  <span className="self-end">
+                    <p className="mt-0 text-muted-foreground ">
+                      {moment(item.createdAt).fromNow()}
+                    </p>
+                  </span>
+                </span>
               </span>
             </div>
-          </li>
+          </Link>
         ))}
       </ul>
     </div>
