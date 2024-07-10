@@ -1,16 +1,23 @@
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 const DURATION = 0.25;
 const STAGGER = 0.025;
 
 // children.split(/(?!$)/u) splits the string by each character, including spaces, and preserves them during rendering. The conditional l === " " ? "\u00A0" : l ensures that spaces are rendered as non-breaking spaces, preventing them from collapsing in the layout. This way, "SEE POSTS" will appear correctly with the space preserved
 const FlipLink = ({ children, href }: { children: any; href: string }) => {
+  const navigation = useNavigate();
+
+  function handleClick() {
+    navigation(`${href}`, { replace: true });
+  }
+
   return (
-    <motion.a
+    <motion.button
       initial="initial"
       whileHover="hovered"
       className="relative block overflow-hidden whitespace-nowrap text-3xl uppercase md:text-4xl "
-      href={href}
+      onClick={handleClick}
     >
       <div>
         {children.split(/(?!$)/u).map((l: any, i: any) => {
@@ -60,7 +67,7 @@ const FlipLink = ({ children, href }: { children: any; href: string }) => {
           );
         })}
       </div>
-    </motion.a>
+    </motion.button>
   );
 };
 
