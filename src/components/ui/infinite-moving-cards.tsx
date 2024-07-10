@@ -1,7 +1,7 @@
 import { cn } from "../../lib/utils";
 import React, { useEffect, useState } from "react";
 import moment from "moment";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useNavigation } from "react-router-dom";
 
 export const InfiniteMovingCards = ({
   items,
@@ -30,16 +30,20 @@ export const InfiniteMovingCards = ({
   }, []);
 
   const [start, setStart] = useState(false);
+  const navigate = useNavigate();
 
   function addAnimation() {
     if (containerRef.current && scrollerRef.current) {
       const scrollerContent = Array.from(scrollerRef.current.children);
 
       scrollerContent.forEach((item) => {
-        const duplicatedItem = item.cloneNode(true);
+        const duplicatedItem = item.cloneNode(true) as HTMLElement;
         if (scrollerRef.current) {
           scrollerRef.current.appendChild(duplicatedItem);
         }
+        // Need to add click event to all nodes, clones included, otherwise would be like playing lottery.
+        addClickHandler(duplicatedItem);
+        addClickHandler(item);
       });
 
       getDirection();
@@ -47,6 +51,16 @@ export const InfiniteMovingCards = ({
       setStart(true);
     }
   }
+
+  const addClickHandler = (element: Element) => {
+    element.addEventListener("click", () => {
+      const id = element.getAttribute("data-id");
+      if (id) {
+        navigate(`post/${id}`);
+      }
+    });
+  };
+
   const getDirection = () => {
     if (containerRef.current) {
       if (direction === "left") {
@@ -62,6 +76,7 @@ export const InfiniteMovingCards = ({
       }
     }
   };
+
   const getSpeed = () => {
     if (containerRef.current) {
       if (speed === "fast") {
@@ -77,10 +92,7 @@ export const InfiniteMovingCards = ({
   return (
     <div
       ref={containerRef}
-      className={cn(
-        "scroller relative z-20  max-w-7xl overflow-hidden  [mask-image:linear-gradient(to_right,transparent,white_20%,white_80%,transparent)]",
-        className
-      )}
+      className={cn("scroller relative  max-w-7xl overflow-hidden", className)}
     >
       <ul
         ref={scrollerRef}
@@ -91,13 +103,9 @@ export const InfiniteMovingCards = ({
         )}
       >
         {items.map((item) => (
-          <Link
-            to={`/post/${item._id}`}
-            className="w-[350px] max-w-full relative rounded-2xl border flex-shrink-0 px-8 py-6 md:w-[450px] transition-transform  hover:-translate-y-2"
-            style={{
-              background:
-                "linear-gradient(180deg, var(--slate-800), var(--slate-900)",
-            }}
+          <div
+            data-id={item._id}
+            className="cursor-pointer z-40 w-[350px] max-w-full relative rounded-2xl border flex-shrink-0 px-8 py-6 md:w-[450px] transition-transform  hover:-translate-y-2"
             key={item._id}
           >
             <p className=" text-muted-foreground">{item.title}</p>
@@ -114,7 +122,7 @@ export const InfiniteMovingCards = ({
                 </span>
               </span>
             </div>
-          </Link>
+          </div>
         ))}
       </ul>
     </div>
