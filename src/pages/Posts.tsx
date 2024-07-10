@@ -1,6 +1,4 @@
-import { StickyScroll } from "../components/ui/sticky-scroll-reveal";
 import imgTest from "../assets/personal-website.png";
-import { connect } from "http2";
 import { Button } from "../components/ui/button";
 import { ArrowUpRight } from "lucide-react";
 
@@ -58,7 +56,7 @@ const Posts = () => {
               </span>
             </span>
             <h4 className=" text-muted-foreground">{item.description}</h4>
-            <span className="flex flex-row w-full justify-between">
+            <span className="flex flex-row w-full justify-between items-center ">
               <Button size={"lg"}>
                 See now <ArrowUpRight />
               </Button>
