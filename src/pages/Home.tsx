@@ -9,7 +9,6 @@ const Home = () => {
   const { data: posts, isLoading } = useQuery({
     queryFn: async () => {
       const response = await axios.get("/post?limit=5");
-      console.log(response.data);
       return response.data;
     },
     queryKey: ["posts"],
