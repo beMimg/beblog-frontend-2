@@ -1,7 +1,7 @@
 import { cn } from "../../lib/utils";
 import React, { useEffect, useState } from "react";
 import moment from "moment";
-import { Link, useNavigate, useNavigation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const InfiniteMovingCards = ({
   items,

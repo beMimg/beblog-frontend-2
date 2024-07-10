@@ -8,6 +8,7 @@ import Posts from "./pages/Posts";
 import { useAuth } from "./context/AuthContext";
 import Profile from "./pages/authenticated/Profile";
 import Post from "./pages/Post";
+import CreatePost from "./pages/authenticated/CreatePost";
 
 function App() {
   const { accessToken } = useAuth();
@@ -28,7 +29,10 @@ function App() {
                 <Route path="/sign-up" element={<SignUp />} />
               </>
             ) : (
-              <Route path="/profile" element={<Profile />} />
+              <>
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/create-post" element={<CreatePost />} />
+              </>
             )}
           </Route>
         </Routes>
