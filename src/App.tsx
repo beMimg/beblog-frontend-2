@@ -11,7 +11,7 @@ import Post from "./pages/Post";
 import CreatePost from "./pages/authenticated/CreatePost";
 
 function App() {
-  const { accessToken } = useAuth();
+  const { accessToken, userRole } = useAuth();
 
   return (
     <BrowserRouter>
@@ -31,7 +31,9 @@ function App() {
             ) : (
               <>
                 <Route path="/profile" element={<Profile />} />
-                <Route path="/create-post" element={<CreatePost />} />
+                {userRole === "admin" && (
+                  <Route path="/create-post" element={<CreatePost />} />
+                )}
               </>
             )}
           </Route>
