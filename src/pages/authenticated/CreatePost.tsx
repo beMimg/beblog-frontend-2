@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { useForm } from "react-hook-form";
 import {
@@ -21,26 +21,28 @@ import {
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "../../components/ui/button";
+import useAxiosPrivate from "../../api/useAxiosPrivate";
+import { useMutation } from "@tanstack/react-query";
+import {
+  ACCEPTED_IMAGE_SIZE,
+  ACCEPTED_IMAGE_TYPES,
+} from "../../contants/contants";
 
 const formSchema = z.object({
   title: z.string().min(1),
   description: z.string().min(1),
   topic: z.string().min(1),
-  image: z.string().min(1),
+  file: z.instanceof(File).refine((file) => file.size < ACCEPTED_IMAGE_SIZE, {
+    message: "Your image must be less than 1MB",
+  }),
 });
 
 type FormData = z.infer<typeof formSchema>;
 
 const CreatePost = () => {
-  const [isValid, setIsValid] = useState(false);
   const editorRef = useRef<any>(null);
 
-  const getEditorContent = () => {
-    if (editorRef.current) {
-      const content = editorRef.current.getContent();
-      console.log(content);
-    }
-  };
+  const axiosPrivate = useAxiosPrivate();
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -48,19 +50,45 @@ const CreatePost = () => {
       title: "",
       description: "",
       topic: "",
-      image: "",
+      file: undefined,
+    },
+  });
+
+  const mutation = useMutation({
+    mutationFn: (formData: FormData) => {
+      const formDataToSend = new FormData();
+      formDataToSend.append("title", formData.title);
+      formDataToSend.append("description", formData.description);
+      formDataToSend.append("topic", formData.topic);
+      formDataToSend.append("file", formData.file);
+      formDataToSend.append("content", editorRef.current.getContent());
+
+      return axiosPrivate.post("/post", formDataToSend, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+    },
+
+    onError: (error: any) => {
+      console.error(error);
+    },
+
+    onSuccess: () => {
+      form.reset();
+      if (editorRef.current) {
+        editorRef.current.setContent("");
+      }
     },
   });
 
   function onSubmit(values: FormData) {
     const content = editorRef.current.getContent();
+
     if (content.length === 0) {
       console.log("you need to write something on the content");
+      return;
     }
-    const data = Object.assign(values, {
-      content: content,
-    });
-    //  do mutation
+
+    mutation.mutate(values);
   }
 
   return (
@@ -82,7 +110,7 @@ const CreatePost = () => {
                   <FormItem>
                     <FormLabel>Title</FormLabel>
                     <FormControl>
-                      <Input {...field} className="max-w-[400px]" />
+                      <Input {...field} className="max-w-[500px]" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -98,7 +126,7 @@ const CreatePost = () => {
                       <Input
                         {...field}
                         placeholder="Description"
-                        className="max-w-[400px]"
+                        className="max-w-[500px]"
                       />
                     </FormControl>
                     <FormMessage />
@@ -112,7 +140,7 @@ const CreatePost = () => {
                   <FormItem>
                     <FormLabel>Topic</FormLabel>
                     <FormControl>
-                      <Input {...field} className="max-w-[400px]" />
+                      <Input {...field} className="max-w-[500px]" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -120,13 +148,21 @@ const CreatePost = () => {
               />
               <FormField
                 control={form.control}
-                name="image"
-                render={({ field }) => (
+                name="file"
+                render={({ field: { onChange } }) => (
                   <FormItem>
                     <FormLabel>Image</FormLabel>
                     <FormControl>
-                      <Input type="file" {...field} className="max-w-[400px]" />
+                      <Input
+                        type="file"
+                        accept={ACCEPTED_IMAGE_TYPES}
+                        onChange={(e) =>
+                          onChange(e.target.files && e.target.files[0])
+                        }
+                        className="max-w-[500px]"
+                      />
                     </FormControl>
+                    <FormMessage />
                     <FormDescription>
                       This is will be the hero of your post
                     </FormDescription>
@@ -171,17 +207,25 @@ const CreatePost = () => {
                   }}
                 />
               </FormItem>
-              <CardFooter>
-                <Button type="submit" className="px-2 py-0">
-                  Create post
-                </Button>
-              </CardFooter>
+              <Button type="submit" className="px-2 py-0 mt-10 max-w-[500px]">
+                {mutation.isPending ? "Loading..." : "Create"}
+              </Button>
+              {mutation.isSuccess && (
+                <span className="max-w-[500px] ">
+                  <p className=" text-success">You've created a post</p>
+                </span>
+              )}
+              {mutation.isError && (
+                <span>
+                  <p className=" text-destructive">
+                    Something went wrong, please try again later.
+                  </p>
+                </span>
+              )}
             </form>
           </Form>
         </CardContent>
       </Card>
-
-      <button onClick={getEditorContent}>Get Editor Content</button>
     </div>
   );
 };
