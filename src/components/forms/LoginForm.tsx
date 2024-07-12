@@ -58,10 +58,7 @@ const LoginForm = () => {
     },
     onSuccess: (data) => {
       setAccessToken(data.data.token);
-      setTimeout(() => {
-        navigation("/", { replace: true });
-        window.location.reload();
-      }, 2000);
+      navigation("/", { replace: true });
     },
   });
 
