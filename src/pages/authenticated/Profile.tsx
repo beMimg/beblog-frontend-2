@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import LogoutDrawer from "../../components/LogoutDrawer";
 import { ModeToggle } from "../../components/ModeToggle";
 import { Button } from "../../components/ui/button";
@@ -21,15 +21,19 @@ import EditProfile from "../../components/EditProfile";
 
 const Profile = () => {
   const axiosPrivate = useAxiosPrivate();
+  const queryClient = useQueryClient();
 
   const { data: user, isLoading } = useQuery({
     queryFn: async () => {
       const response = await axiosPrivate.get("/user/self");
-      console.log(response);
       return response.data;
     },
     queryKey: ["user"],
   });
+
+  const handleProfileUpdate = () => {
+    queryClient.invalidateQueries({ queryKey: ["user"] });
+  };
 
   return (
     <div className="flex flex-1 flex-col max-w-7xl items-center justify-center mx-auto w-full h-full ">
@@ -38,12 +42,17 @@ const Profile = () => {
           <CardTitle>
             <div className="flex flex-row justify-between">
               <Avatar className="h-40 w-40">
-                <AvatarImage src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzUUk1-q7FOStOQCqSfzWMHkQRuDynMiGQO4d8054frzmPvkhc55BrVUP-IR2a86aiYZg&usqp=CAU" />
+                <AvatarImage src={user && user.imageUrl} />
                 <AvatarFallback>
                   {user && user.username.slice(0, 1).toUpperCase()}
                 </AvatarFallback>
               </Avatar>
-              <EditProfile />
+              {user && (
+                <EditProfile
+                  user={user}
+                  onProfileUpdate={handleProfileUpdate}
+                />
+              )}
             </div>
             <p>{user && user.username}</p>
           </CardTitle>
