@@ -6,6 +6,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "../../components/ui/card";
@@ -18,6 +19,7 @@ import {
   AvatarImage,
 } from "../../components/ui/avatar";
 import EditProfile from "../../components/EditProfile";
+import { Skeleton } from "../../components/ui/skeleton";
 
 const Profile = () => {
   const axiosPrivate = useAxiosPrivate();
@@ -38,37 +40,54 @@ const Profile = () => {
   return (
     <div className="flex flex-1 flex-col max-w-7xl items-center justify-center mx-auto w-full h-full ">
       <Card className="max-w-2xl w-full ">
-        <CardHeader className="gap-2 mb-5 rounded-[--radius]">
-          <CardTitle>
-            <div className="flex flex-row justify-between">
+        {user ? (
+          <>
+            <CardHeader className="gap-2 mb-5 rounded-[--radius] flex flex-row justify-between">
               <Avatar className="h-40 w-40">
-                <AvatarImage src={user && user.imageUrl} />
+                <AvatarImage src={user.imageUrl} />
                 <AvatarFallback>
-                  {user && user.username.slice(0, 1).toUpperCase()}
+                  {user.username.slice(0, 1).toUpperCase()}
                 </AvatarFallback>
               </Avatar>
-              {user && (
-                <EditProfile
-                  user={user}
-                  onProfileUpdate={handleProfileUpdate}
-                />
-              )}
-            </div>
-            <p>{user && user.username}</p>
-          </CardTitle>
-          <CardDescription>
-            {user && `Joined ${moment(user.createdAt).fromNow()}`}
-          </CardDescription>
-          <CardDescription>
-            {user && user.bio ? user.bio : "Something about me"}
-          </CardDescription>
-          <Badge className="self-start">{user && user.role}</Badge>
-        </CardHeader>
-        <CardContent className="flex flex-row items-center justify-between gap-2 ">
-          <ModeToggle variant="ghost" />
-          <Button variant="ghost">Likes</Button>
-          <LogoutDrawer />
-        </CardContent>
+              <EditProfile user={user} onProfileUpdate={handleProfileUpdate} />
+            </CardHeader>
+
+            <CardContent>
+              <CardTitle>{user.username}</CardTitle>
+              <CardDescription>
+                Joined {moment(user.createdAt).fromNow()}
+              </CardDescription>
+              <CardDescription>
+                {user.bio ? user.bio : "Something about me"}
+              </CardDescription>
+              <Badge className="self-start mt-[24px]">{user.role}</Badge>
+            </CardContent>
+
+            <CardFooter className="flex flex-row items-center justify-between gap-2 ">
+              <ModeToggle variant="ghost" />
+              <Button variant="ghost">Likes</Button>
+              <LogoutDrawer />
+            </CardFooter>
+          </>
+        ) : (
+          <>
+            <CardHeader className="gap-2 mb-5 rounded-[--radius] flex flex-row justify-between">
+              <Skeleton className="h-40 w-40 rounded-full" />
+              <Skeleton className="h-12 w-12 rounded-full" />
+            </CardHeader>
+            <CardContent className="flex flex-col gap-6">
+              <Skeleton className="h-4 w-[40%] rounded-full" />
+              <Skeleton className="h-4 w-[40%] rounded-full" />
+              <Skeleton className="h-4 w-[80%] rounded-full" />
+              <Skeleton className="h-4 w-[10%] rounded-full" />
+            </CardContent>
+            <CardFooter className="flex flex-row items-center justify-between gap-2 ">
+              <Skeleton className="h-4 w-[10%] rounded-full" />
+              <Skeleton className="h-4 w-[10%] rounded-full" />
+              <Skeleton className="h-4 w-[10%] rounded-full" />
+            </CardFooter>
+          </>
+        )}
       </Card>
     </div>
   );
