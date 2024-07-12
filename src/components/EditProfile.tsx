@@ -78,7 +78,7 @@ const EditProfile = ({ user, onProfileUpdate }: any) => {
                 type="file"
                 accept={ACCEPTED_IMAGE_TYPES}
                 onChange={(e) => setImage(e.target.files && e.target.files[0])}
-                className="col-span-3"
+                className="col-span-3 text-white"
               />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
