@@ -3,7 +3,7 @@ import { ModeToggle } from "./ModeToggle";
 
 const Footer = () => {
   return (
-    <footer className="  w-full bg-card px-4 py-10 text-muted-foreground">
+    <footer className="bg-muted  w-full  px-4 py-10 text-muted-foreground">
       <div className="max-w-7xl mx-auto grid grid-rows-2 gap-4">
         <div className="w-full flex flex-row justify-between">
           <h4>beBlog # 2024</h4>
