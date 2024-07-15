@@ -20,12 +20,13 @@ import {
 } from "../../components/ui/avatar";
 import EditProfile from "../../components/EditProfile";
 import { Skeleton } from "../../components/ui/skeleton";
+import { Link } from "react-router-dom";
 
 const Profile = () => {
   const axiosPrivate = useAxiosPrivate();
   const queryClient = useQueryClient();
 
-  const { data: user, isLoading } = useQuery({
+  const { data: user } = useQuery({
     queryFn: async () => {
       const response = await axiosPrivate.get("/user/self");
       return response.data;
@@ -67,6 +68,11 @@ const Profile = () => {
               <ModeToggle variant="ghost" />
               <Button variant="ghost">Likes</Button>
               <LogoutDrawer />
+              {user.role === "admin" && (
+                <Button variant="ghost">
+                  <Link to="/create-post">Create Post</Link>
+                </Button>
+              )}
             </CardFooter>
           </>
         ) : (
