@@ -33,7 +33,8 @@ const PostCard = ({
             <p className="text-muted-foreground">{item.topic}</p>
           </span>
         </span>
-        <h4 className=" text-muted-foreground">{item.description}</h4>
+
+        <p className=" p-lead ">{item.description}</p>
         <span className="flex flex-row w-full justify-between items-center ">
           <Button onClick={handleSeePostClick} size={"lg"}>
             See now <ArrowUpRight />

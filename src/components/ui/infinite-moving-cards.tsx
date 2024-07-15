@@ -105,10 +105,10 @@ export const InfiniteMovingCards = ({
         {items.map((item) => (
           <div
             data-id={item._id}
-            className="cursor-pointer z-40 w-[350px] max-w-full relative rounded-2xl border flex-shrink-0 px-8 py-6 md:w-[450px] transition-transform  hover:-translate-y-2"
+            className="cursor-pointer  z-40 w-[350px] max-w-full relative rounded-2xl border flex-shrink-0 px-8 py-6 md:w-[450px] transition-transform  hover:-translate-y-2"
             key={item._id}
           >
-            <p className=" text-muted-foreground">{item.title}</p>
+            <p className="font-semibold">{item.title}</p>
             <blockquote>{item.description}</blockquote>
             <div className="relative z-20 mt-6 flex flex-row items-center">
               <span className="flex flex-col gap-1 w-full">
