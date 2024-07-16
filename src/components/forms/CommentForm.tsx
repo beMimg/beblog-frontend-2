@@ -15,7 +15,6 @@ const CommentForm = () => {
   const { data: user, isLoading } = useQuery({
     queryFn: async () => {
       const response = await axiosPrivate.get("/user/self");
-      console.log(response);
       return response.data;
     },
     queryKey: ["user"],

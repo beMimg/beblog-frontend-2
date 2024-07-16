@@ -36,7 +36,7 @@ const Post = () => {
           <Comments id={id} />
         </div>
       </div>
-      <aside>
+      <aside className="hidden md:block">
         <Card>
           <CardHeader>
             <CardTitle>Card Title</CardTitle>
@@ -49,9 +49,18 @@ const Post = () => {
             <p>Card Footer</p>
           </CardFooter>
         </Card>
-        <div className="border border-red-500 h-[400px] w-full hidden md:flex mt-10">
-          <h1>lol</h1>
-        </div>
+        <Card>
+          <CardHeader>
+            <CardTitle>Card Title</CardTitle>
+            <CardDescription>Card Description</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <p>Card Content</p>
+          </CardContent>
+          <CardFooter>
+            <p>Card Footer</p>
+          </CardFooter>
+        </Card>
       </aside>
     </div>
   );
