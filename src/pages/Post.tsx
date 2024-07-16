@@ -11,10 +11,12 @@ import {
 } from "../components/ui/card";
 import CommentSection from "../components/CommentSection";
 import FloatingPhone from "../components/ui/phone";
+import { useAuth } from "../context/AuthContext";
 
 const Post = () => {
   const { id } = useParams();
-
+  const { userInfo } = useAuth();
+  console.log(userInfo);
   return (
     <div className="max-w-7xl mx-auto w-full lg:grid lg:grid-cols-[3fr,1fr] gap-6 relative">
       <div>
