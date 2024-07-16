@@ -31,7 +31,7 @@ const Post = () => {
               to join the conversation and leave a comment.
             </p>
           ) : (
-            <CommentForm />
+            <CommentForm id={id} />
           )}
           <Comments id={id} />
         </div>

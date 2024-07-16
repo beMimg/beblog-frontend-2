@@ -22,9 +22,10 @@ const CommentCard = ({ comment }: { comment: any }) => {
           </span>
         </span>
       </div>
-      <div className="ml-16 p-4 border border-secondary rounded-[--radius] ">
-        {comment.text}
-      </div>
+      <div
+        className="ml-16 p-4 border border-secondary rounded-[--radius] max-w-3xl break-words "
+        dangerouslySetInnerHTML={{ __html: comment.text }}
+      />
     </div>
   );
 };

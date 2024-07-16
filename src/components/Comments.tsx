@@ -11,7 +11,6 @@ const Comments = ({ id }: { id: string | undefined }) => {
   } = useQuery({
     queryFn: async () => {
       const response = await axios.get(`/comment/post/${id}`);
-      console.log(response);
       return response.data;
     },
     queryKey: ["comments"],
@@ -45,7 +44,9 @@ const Comments = ({ id }: { id: string | undefined }) => {
   return (
     <div className="mt-10 flex flex-col gap-10">
       {comments &&
-        comments.map((comment: any) => <CommentCard comment={comment} />)}
+        comments.map((comment: any) => (
+          <CommentCard key={comment._id} comment={comment} />
+        ))}
     </div>
   );
 };
