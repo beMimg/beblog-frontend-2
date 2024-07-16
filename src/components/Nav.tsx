@@ -82,8 +82,9 @@ const Nav = () => {
                 </>
               ) : (
                 <>
-                  <DropdownMenuLabel>Profile</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>
+                    <Link to="/profile">Profile</Link>
+                  </DropdownMenuItem>
                   <DropdownMenuItem>
                     <Link to="/posts">Posts</Link>
                   </DropdownMenuItem>
