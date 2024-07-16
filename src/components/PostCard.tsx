@@ -17,7 +17,6 @@ const PostCard = ({
 }) => {
   const navigation = useNavigate();
   function handleSeePostClick() {
-    console.log(item._id);
     navigation(`/post/${item._id}`, { replace: true });
   }
 

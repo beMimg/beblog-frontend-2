@@ -2,24 +2,18 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Editor } from "@tinymce/tinymce-react";
 import React, { useRef, useState } from "react";
 import { Button } from "../ui/button";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import useAxiosPrivate from "../../api/useAxiosPrivate";
 import { Skeleton } from "../ui/skeleton";
 
-const CommentForm = ({
-  id,
-  handleCommentUpdate,
-}: {
-  id: string | undefined;
-  handleCommentUpdate: any;
-}) => {
+const CommentForm = ({ id }: { id: string | undefined }) => {
   const [commentSubmitError, setCommentSubmitError] = useState<boolean>(false);
   const [commentSubmitLoading, setCommentSubmitLoading] =
     useState<boolean>(false);
   const [comment, setComment] = useState<any>("");
   const [length, setLength] = useState<number>(0);
   const editorRef = useRef<any>(null);
-
+  const queryClient = useQueryClient();
   const axiosPrivate = useAxiosPrivate();
 
   // TinyMCE stuff
@@ -81,7 +75,7 @@ const CommentForm = ({
       // If the request is successfull, lets refresh the fetched comments in the parent component so that the comments are up to date.
       if (response.status === 201) {
         editorRef.current.setContent("");
-        handleCommentUpdate();
+        queryClient.invalidateQueries({ queryKey: ["comments"] });
       }
     } catch (err) {
       setCommentSubmitError(true);

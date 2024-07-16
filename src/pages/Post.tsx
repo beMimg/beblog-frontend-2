@@ -16,7 +16,7 @@ import { useAuth } from "../context/AuthContext";
 const Post = () => {
   const { id } = useParams();
   const { userInfo } = useAuth();
-  console.log(userInfo);
+
   return (
     <div className="max-w-7xl mx-auto w-full lg:grid lg:grid-cols-[3fr,1fr] gap-6 relative">
       <div>
@@ -29,7 +29,7 @@ const Post = () => {
         </div>
         <Card className="hidden lg:grid xl:hidden">
           <CardHeader>
-            <CardTitle>Hi name of the user</CardTitle>
+            <CardTitle>Hi {userInfo?.username}</CardTitle>
             <CardDescription>I would love to be in touch.</CardDescription>
           </CardHeader>
           <CardContent>

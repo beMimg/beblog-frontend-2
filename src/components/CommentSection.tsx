@@ -39,7 +39,7 @@ const CommentSection = ({ id }: { id: string | undefined }) => {
           to join the conversation and leave a comment.
         </p>
       ) : (
-        <CommentForm id={id} handleCommentUpdate={handleCommentsUpdate} />
+        <CommentForm id={id} />
       )}
       <Comments comments={comments} isLoading={isLoading} isError={isError} />
     </div>
