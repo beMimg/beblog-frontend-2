@@ -1,8 +1,6 @@
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import PostContent from "../components/PostContent";
-import CommentForm from "../components/forms/CommentForm";
-import { useAuth } from "../context/AuthContext";
-import Comments from "../components/Comments";
+
 import {
   Card,
   CardContent,
