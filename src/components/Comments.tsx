@@ -10,7 +10,7 @@ const Comments = ({ id }: { id: string | undefined }) => {
     isError,
   } = useQuery({
     queryFn: async () => {
-      const response = await axios.get(`/commentss/post/${id}`);
+      const response = await axios.get(`/comment/post/${id}`);
       console.log(response);
       return response.data;
     },

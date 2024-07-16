@@ -44,41 +44,20 @@ const CommentForm = () => {
               {user.username.slice(0, 1).toUpperCase()}
             </AvatarFallback>
           </Avatar>
-          <form>
+          <form className="w-full">
             <Editor
               onEditorChange={handleUpdate}
               value={comment}
               apiKey="d29mu3o4g2ibt9eeg8megzvbagky1duugzvlvekp63k3eztp"
               onInit={handleInit}
               init={{
-                height: "200px",
+                width: "100%",
+                height: 200,
                 placeholder: "What do you think?",
                 menubar: false,
-                plugins: [
-                  "advlist",
-                  "autolink",
-                  "lists",
-                  "link",
-                  "image",
-                  "charmap",
-                  "preview",
-                  "anchor",
-                  "searchreplace",
-                  "visualblocks",
-                  "code",
-                  "fullscreen",
-                  "insertdatetime",
-                  "media",
-                  "table",
-                  "code",
-                  "help",
-                  "wordcount",
-                ],
+                plugins: ["wordcount"],
                 toolbar:
-                  "undo redo | blocks | " +
-                  "bold italic forecolor | alignleft aligncenter " +
-                  "alignright alignjustify | bullist numlist outdent indent | " +
-                  "removeformat | help",
+                  "undo redo | bold italic | alignleft aligncenter alignright | bullist numlist | removeformat",
                 content_style:
                   "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
               }}
