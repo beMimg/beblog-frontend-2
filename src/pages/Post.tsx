@@ -12,39 +12,36 @@ import {
   CardTitle,
 } from "../components/ui/card";
 import CommentSection from "../components/CommentSection";
+import FloatingPhone from "../components/ui/phone";
 
 const Post = () => {
   const { id } = useParams();
 
   return (
-    <div className="max-w-7xl mx-auto w-full md:grid md:grid-cols-[3fr,1fr] gap-6">
+    <div className="max-w-7xl mx-auto w-full lg:grid lg:grid-cols-[3fr,1fr] gap-6 relative">
       <div>
         <PostContent id={id} />
         <CommentSection id={id} />
       </div>
-      <aside className="hidden md:block">
-        <Card>
+      <aside className="hidden lg:flex flex-col gap-10 lg:sticky top-[50px] self-start ">
+        <div className="hidden  xl:grid place-items-end ">
+          <FloatingPhone />
+        </div>
+        <Card className="hidden lg:grid xl:hidden">
           <CardHeader>
-            <CardTitle>Card Title</CardTitle>
-            <CardDescription>Card Description</CardDescription>
+            <CardTitle>Hi name of the user</CardTitle>
+            <CardDescription>I would love to be in touch.</CardDescription>
           </CardHeader>
           <CardContent>
-            <p>Card Content</p>
+            Would you like to debate on something you saw here?
           </CardContent>
           <CardFooter>
-            <p>Card Footer</p>
-          </CardFooter>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>Card Title</CardTitle>
-            <CardDescription>Card Description</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <p>Card Content</p>
-          </CardContent>
-          <CardFooter>
-            <p>Card Footer</p>
+            <a
+              href="mailto:bemimg.dev@gmail.com"
+              className="hover:underline transition-all"
+            >
+              Contact me
+            </a>
           </CardFooter>
         </Card>
       </aside>

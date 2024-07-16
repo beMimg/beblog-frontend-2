@@ -25,7 +25,7 @@ const CommentForm = ({
   // TinyMCE stuff
   const maxSizeComment = 500;
 
-  const handleInit = (evt: any, editor: any) => {
+  const handleInit = (_evt: any, editor: any) => {
     setLength(editor.getContent({ format: "text" }).length);
   };
 
