@@ -2,29 +2,27 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Editor } from "@tinymce/tinymce-react";
 import React, { useRef, useState } from "react";
 import { Button } from "../ui/button";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import useAxiosPrivate from "../../api/useAxiosPrivate";
 import { Skeleton } from "../ui/skeleton";
-import axios from "../../api/axios";
 
-const CommentForm = ({ id }: { id: string | undefined }) => {
+const CommentForm = ({
+  id,
+  handleCommentUpdate,
+}: {
+  id: string | undefined;
+  handleCommentUpdate: any;
+}) => {
+  const [commentSubmitError, setCommentSubmitError] = useState<boolean>(false);
+  const [commentSubmitLoading, setCommentSubmitLoading] =
+    useState<boolean>(false);
   const [comment, setComment] = useState<any>("");
   const [length, setLength] = useState<number>(0);
+  const editorRef = useRef<any>(null);
 
   const axiosPrivate = useAxiosPrivate();
 
-  const {
-    data: user,
-    isLoading,
-    isError,
-  } = useQuery({
-    queryFn: async () => {
-      const response = await axiosPrivate.get("/user/self");
-      return response.data;
-    },
-    queryKey: ["user"],
-  });
-
+  // TinyMCE stuff
   const maxSizeComment = 500;
 
   const handleInit = (evt: any, editor: any) => {
@@ -38,6 +36,19 @@ const CommentForm = ({ id }: { id: string | undefined }) => {
       setLength(length);
     }
   }
+
+  //  Conditional rendering depending on whether the user as been fetched or not.
+  const {
+    data: user,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryFn: async () => {
+      const response = await axiosPrivate.get("/user/self");
+      return response.data;
+    },
+    queryKey: ["user"],
+  });
 
   if (isLoading) {
     return (
@@ -60,12 +71,22 @@ const CommentForm = ({ id }: { id: string | undefined }) => {
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     try {
+      setCommentSubmitLoading(true);
+      setCommentSubmitError(false);
+
       const response = await axiosPrivate.post(`/comment/post/${id}`, {
         text: comment,
       });
-      console.log(response);
+
+      // If the request is successfull, lets refresh the fetched comments in the parent component so that the comments are up to date.
+      if (response.status === 201) {
+        editorRef.current.setContent("");
+        handleCommentUpdate();
+      }
     } catch (err) {
-      console.error(err);
+      setCommentSubmitError(true);
+    } finally {
+      setCommentSubmitLoading(false);
     }
   }
 
@@ -88,7 +109,6 @@ const CommentForm = ({ id }: { id: string | undefined }) => {
               init={{
                 width: "100%",
                 height: 200,
-
                 placeholder: "What do you think?",
                 menubar: false,
                 plugins: ["wordcount"],
@@ -97,10 +117,20 @@ const CommentForm = ({ id }: { id: string | undefined }) => {
                 content_style:
                   "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
               }}
+              ref={(editor) => {
+                if (editor) {
+                  editorRef.current = editor.editor;
+                }
+              }}
             />
+            {commentSubmitError && (
+              <p className="text-destructive">
+                Something went wrong please try again later.
+              </p>
+            )}
             <div className="flex flex-row w-full justify-between">
               <Button disabled={!comment} className="mt-4">
-                Submit
+                {commentSubmitLoading ? "Loading..." : "Submit"}
               </Button>
               <span>
                 <p className="text-muted-foreground text-sm pt-1">

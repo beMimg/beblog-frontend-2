@@ -34,6 +34,7 @@ const Profile = () => {
     queryKey: ["user"],
   });
 
+  // Used when the user updates de profile, refresh the profile to be up to date.
   const handleProfileUpdate = () => {
     queryClient.invalidateQueries({ queryKey: ["user"] });
   };

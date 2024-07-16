@@ -1,21 +1,15 @@
-import { useQuery } from "@tanstack/react-query";
-import axios from "../api/axios";
 import CommentCard from "./CommentCard";
 import { Skeleton } from "./ui/skeleton";
 
-const Comments = ({ id }: { id: string | undefined }) => {
-  const {
-    data: comments,
-    isLoading,
-    isError,
-  } = useQuery({
-    queryFn: async () => {
-      const response = await axios.get(`/comment/post/${id}`);
-      return response.data;
-    },
-    queryKey: ["comments"],
-  });
-
+const Comments = ({
+  comments,
+  isLoading,
+  isError,
+}: {
+  comments: any;
+  isLoading: boolean;
+  isError: boolean;
+}) => {
   if (comments && comments.length === 0) {
     return <p className="p-lead pt-10">Be the first to comment on this post</p>;
   }

@@ -11,30 +11,16 @@ import {
   CardHeader,
   CardTitle,
 } from "../components/ui/card";
+import CommentSection from "../components/CommentSection";
 
 const Post = () => {
   const { id } = useParams();
-  const { accessToken } = useAuth();
 
   return (
     <div className="max-w-7xl mx-auto w-full md:grid md:grid-cols-[3fr,1fr] gap-6">
       <div>
         <PostContent id={id} />
-        <div>
-          <h2 className="pt-10 ">Comments</h2>
-          {!accessToken ? (
-            <p className="text-center text-muted-foreground">
-              Please{" "}
-              <Link to="/sign-in" className="underline font-medium">
-                log in
-              </Link>{" "}
-              to join the conversation and leave a comment.
-            </p>
-          ) : (
-            <CommentForm id={id} />
-          )}
-          <Comments id={id} />
-        </div>
+        <CommentSection id={id} />
       </div>
       <aside className="hidden md:block">
         <Card>
