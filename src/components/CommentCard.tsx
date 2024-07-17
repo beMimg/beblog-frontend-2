@@ -16,6 +16,7 @@ const CommentCard = ({ comment }: { comment: any }) => {
   const queryClient = useQueryClient();
   const axiosPrivate = useAxiosPrivate();
 
+  // To improve
   const mutation = useMutation({
     mutationFn: (id: string) => {
       return axiosPrivate.delete(`/comment/${id}`);
@@ -23,7 +24,7 @@ const CommentCard = ({ comment }: { comment: any }) => {
     onError: (error: any) => {
       console.error(error.message);
     },
-    onSuccess: (data: any) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["comments"] });
     },
   });
