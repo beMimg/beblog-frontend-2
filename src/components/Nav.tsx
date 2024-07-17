@@ -35,17 +35,27 @@ const Nav = () => {
           <h1>BeBlog</h1>
         </Link>
         {/* Desktop Devices */}
-        <div className="hidden sm:flex items-center gap-5 text-lg font-medium">
+        <div className="hidden sm:flex items-center gap-8  font-medium">
           {!accessToken ? (
             <>
-              <Link to="/posts">Posts</Link>
-              <Link to="/sign-up">Sign up</Link>
-              <Link to="/sign-in">Sign in</Link>
+              <Link to="/posts" className="menu__link">
+                Posts
+              </Link>
+              <Link to="/sign-up" className="menu__link">
+                Sign up
+              </Link>
+              <Link to="/sign-in" className="menu__link">
+                Sign in
+              </Link>
             </>
           ) : (
             <>
-              <Link to="/posts">Posts</Link>
-              <Link to="/profile">Profile</Link>
+              <Link to="/posts" className="menu__link">
+                Posts
+              </Link>
+              <Link to="/profile" className="menu__link">
+                Profile
+              </Link>
             </>
           )}
 
@@ -64,15 +74,20 @@ const Nav = () => {
               {!accessToken ? (
                 <>
                   <DropdownMenuItem>
-                    <Link to="/posts">Posts</Link>
+                    <Link to="/posts" className="w-full">
+                      Posts
+                    </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => setIsDropDownOpen(false)}>
-                    <Link to="/sign-up">Sign up</Link>
+                    <Link to="/sign-up" className="w-full">
+                      Sign up
+                    </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem>
                     <Link
                       to="/sign-in"
                       onClick={() => setIsDropDownOpen(false)}
+                      className="w-full"
                     >
                       Sign in
                     </Link>
@@ -81,10 +96,14 @@ const Nav = () => {
               ) : (
                 <>
                   <DropdownMenuItem>
-                    <Link to="/profile">Profile</Link>
+                    <Link to="/profile" className="w-full">
+                      Profile
+                    </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem>
-                    <Link to="/posts">Posts</Link>
+                    <Link to="/posts" className="w-full">
+                      Posts
+                    </Link>
                   </DropdownMenuItem>
                 </>
               )}
