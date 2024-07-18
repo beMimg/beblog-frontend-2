@@ -11,7 +11,11 @@ const Comments = ({
   isError: boolean;
 }) => {
   if (comments && comments.length === 0) {
-    return <p className="p-lead pt-10">Be the first to comment on this post</p>;
+    return (
+      <p className="text-muted-foreground pt-10">
+        Be the first to comment on this post
+      </p>
+    );
   }
 
   if (isLoading) {

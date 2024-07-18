@@ -2,12 +2,11 @@ import { useAuth } from "../context/AuthContext";
 import CommentForm from "./forms/CommentForm";
 import Comments from "./Comments";
 import { Link } from "react-router-dom";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import axios from "../api/axios";
 
 const CommentSection = ({ id }: { id: string | undefined }) => {
   const { accessToken } = useAuth();
-  const queryClient = useQueryClient();
 
   const {
     data: comments,
@@ -22,9 +21,6 @@ const CommentSection = ({ id }: { id: string | undefined }) => {
   });
 
   // Called when the user submits the comment, refresh the comments to be up to date.
-  const handleCommentsUpdate = () => {
-    queryClient.invalidateQueries({ queryKey: ["comments"] });
-  };
 
   return (
     <div>

@@ -1,8 +1,5 @@
-import React, { useState } from "react";
-import { FaRegComment } from "react-icons/fa";
+import { useState } from "react";
 import { FaHeart } from "react-icons/fa";
-import { FaRegBookmark } from "react-icons/fa";
-import { Link } from "react-router-dom";
 import useAxiosPrivate from "../api/useAxiosPrivate";
 import { useQueryClient } from "@tanstack/react-query";
 
@@ -32,10 +29,14 @@ const LikePost = ({
       setError(false);
       if (!isLiked) {
         const response = await axiosPrivate.post(`/post/${post._id}/like`);
-        queryClient.invalidateQueries({ queryKey: ["post"] });
+        if (response.status === 201) {
+          queryClient.invalidateQueries({ queryKey: ["post"] });
+        }
       } else {
         const response = await axiosPrivate.delete(`/post/${post._id}/like`);
-        queryClient.invalidateQueries({ queryKey: ["post"] });
+        if (response.status === 200) {
+          queryClient.invalidateQueries({ queryKey: ["post"] });
+        }
       }
     } catch (err) {
       setError(true);
@@ -44,20 +45,26 @@ const LikePost = ({
     }
   };
 
+  if (error) return <p className="text-destructive">Coudn't fetch likes.</p>;
+
   return (
-    <div className="flex flex-row items-center gap-1 mt-10">
+    <div className="flex flex-row items-center gap-2 mt-10">
       <button
         onClick={handlePostLike}
         disabled={loading}
         className="cursor-pointer disabled:cursor-not-allowed"
       >
         <FaHeart
-          className={isLiked ? "text-red-500" : "text-muted-foreground"}
+          className={`${
+            isLiked ? "text-red-500" : "text-muted-foreground"
+          } text-xl`}
         />
       </button>
-      <p className="text-muted-foreground">
-        {post.likes.length === 0 ? "" : post.likes.length}
-      </p>
+      <span>
+        <p className="text-muted-foreground">
+          {post.likes.length === 0 ? "" : post.likes.length}
+        </p>
+      </span>
     </div>
   );
 };

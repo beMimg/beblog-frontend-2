@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { ModeToggle } from "./ModeToggle";
-import { Github, Linkedin } from "lucide-react";
+import { Linkedin } from "lucide-react";
 import { Button } from "./ui/button";
 
 const Footer = () => {
