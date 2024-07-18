@@ -2,6 +2,7 @@ import { useState } from "react";
 import { FaHeart } from "react-icons/fa";
 import useAxiosPrivate from "../api/useAxiosPrivate";
 import { useQueryClient } from "@tanstack/react-query";
+import { Button } from "./ui/button";
 
 // if borders === true render borders. conditianal styiling depending on
 // rendering in Post or PostContent
@@ -48,24 +49,23 @@ const LikePost = ({
   if (error) return <p className="text-destructive">Coudn't fetch likes.</p>;
 
   return (
-    <div className="flex flex-row items-center gap-2 mt-10">
-      <button
-        onClick={handlePostLike}
-        disabled={loading}
-        className="cursor-pointer disabled:cursor-not-allowed"
-      >
-        <FaHeart
-          className={`${
-            isLiked ? "text-red-500" : "text-muted-foreground"
-          } text-xl`}
-        />
-      </button>
+    <Button
+      variant={"ghost"}
+      onClick={handlePostLike}
+      disabled={loading}
+      className="cursor-pointer disabled: mt-10 flex flex-row items-center gap-2 disabled:text-muted  "
+    >
+      <FaHeart
+        className={`${
+          isLiked ? "text-red-500" : "text-muted-foreground"
+        } text-xl`}
+      />
       <span>
         <p className="text-muted-foreground">
           {post.likes.length === 0 ? "" : post.likes.length}
         </p>
       </span>
-    </div>
+    </Button>
   );
 };
 
