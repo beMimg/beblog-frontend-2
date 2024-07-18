@@ -32,7 +32,7 @@ const Nav = () => {
     <header className="p-4 inset-x-0 ">
       <nav className="flex items-center mx-auto max-w-7xl justify-between ">
         <Link to="/">
-          <h1>BeBlog</h1>
+          <p className="font-bold text-3xl">BeBlog</p>
         </Link>
         {/* Desktop Devices */}
         <div className="hidden sm:flex items-center gap-8  font-medium">

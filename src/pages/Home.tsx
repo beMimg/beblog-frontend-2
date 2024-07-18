@@ -36,8 +36,8 @@ const Home = () => {
         They’re out of this world!
       </p>
       <FlipLink href="/posts">SEE POSTS ↗</FlipLink>
-
-      <div className=" overflow-hidden w-full flex items-center justify-center">
+      {/* had to set 99vw, 100vw was causing overflow, CAUSE: NO IDEA :) */}
+      <div className=" overflow-hidden  w-[99vw]">
         <InfiniteMovingCards items={posts} direction="right" speed="normal" />
       </div>
     </div>
