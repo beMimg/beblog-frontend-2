@@ -16,6 +16,10 @@ export const InfiniteMovingCards = ({
     topic: string;
     title: string;
     createdAt: string;
+    image: string;
+    author: {
+      username: string;
+    };
   }[];
   direction?: "left" | "right";
   speed?: "fast" | "normal" | "slow";
@@ -89,6 +93,7 @@ export const InfiniteMovingCards = ({
     }
   };
 
+  console.log(items);
   return (
     <div
       ref={containerRef}
@@ -108,7 +113,14 @@ export const InfiniteMovingCards = ({
             className="cursor-pointer  z-40 w-[350px] max-w-full relative rounded-2xl border flex-shrink-0 px-8 py-6 md:w-[450px] transition-transform  hover:-translate-y-2"
             key={item._id}
           >
-            <p className="font-semibold">{item.title}</p>
+            <div className="flex flex-row justify-between items-start">
+              <p className="font-semibold">{item.title}</p>
+              <img
+                src={item.image}
+                alt=""
+                className="md:h-16 md:w-16 h-12 w-12 object-center object-cover rounded-2xl"
+              />
+            </div>
             <blockquote>{item.description}</blockquote>
             <div className="relative z-20 mt-6 flex flex-row items-center">
               <span className="flex flex-col gap-1 w-full">
