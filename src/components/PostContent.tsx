@@ -3,8 +3,11 @@ import axios from "../api/axios";
 import { Avatar, AvatarFallback, AvatarImage } from "../components/ui/avatar";
 import moment from "moment";
 import { Skeleton } from "./ui/skeleton";
+import { useAuth } from "../context/AuthContext";
+import LikePost from "./LikePost";
 
 const PostContent = ({ id }: { id: string | undefined }) => {
+  const { userInfo } = useAuth();
   const {
     data: post,
     isLoading,
@@ -40,6 +43,7 @@ const PostContent = ({ id }: { id: string | undefined }) => {
     );
   }
 
+  console.log(post);
   return (
     post && (
       <>
@@ -49,6 +53,8 @@ const PostContent = ({ id }: { id: string | undefined }) => {
         />
         <h1 className="mt-10">{post.title}</h1>
         <h3 className="text-muted-foreground mt-10">{post.description}</h3>
+
+        <LikePost post={post} userId={userInfo?.id} />
         <div className="mt-10 flex flex-row gap-4 border-b border-secondary pb-10">
           <Avatar className="h-16 w-16">
             <AvatarImage src={post.author.imageUrl} />
