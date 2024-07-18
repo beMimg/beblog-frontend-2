@@ -189,7 +189,6 @@ body::-webkit-scrollbar-thumb:hover {
 }
 
 .menu__link {
-  color: #fff;
   line-height: 2;
   position: relative;
 }
@@ -199,7 +198,6 @@ body::-webkit-scrollbar-thumb:hover {
   width: 0;
   height: 2px;
   border-radius: 2px;
-  background-color: #fff;
   position: absolute;
   bottom: -0.25rem;
   left: 0;

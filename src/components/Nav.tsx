@@ -38,22 +38,37 @@ const Nav = () => {
         <div className="hidden sm:flex items-center gap-8  font-medium">
           {!accessToken ? (
             <>
-              <Link to="/posts" className="menu__link">
+              <Link
+                to="/posts"
+                className="text-muted-foreground hover:text-black dark:hover:text-white"
+              >
                 Posts
               </Link>
-              <Link to="/sign-up" className="menu__link">
+              <Link
+                to="/sign-up"
+                className="text-muted-foreground hover:text-black dark:hover:text-white"
+              >
                 Sign up
               </Link>
-              <Link to="/sign-in" className="menu__link">
+              <Link
+                to="/sign-in"
+                className="text-muted-foreground hover:text-black dark:hover:text-white"
+              >
                 Sign in
               </Link>
             </>
           ) : (
             <>
-              <Link to="/posts" className="menu__link">
+              <Link
+                to="/posts"
+                className="text-muted-foreground hover:text-black dark:hover:text-white"
+              >
                 Posts
               </Link>
-              <Link to="/profile" className="menu__link">
+              <Link
+                to="/profile"
+                className="text-muted-foreground hover:text-black dark:hover:text-white"
+              >
                 Profile
               </Link>
             </>
